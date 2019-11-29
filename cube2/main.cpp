@@ -1,7 +1,6 @@
 // Rubik Cube in OpenGL
 
 #include <GL/gl.h>
-#define GLUT_DISABLE_ATEXIT_HACK
 #include <GL/glut.h>
 #include <vector>
 
@@ -128,7 +127,7 @@ void draw_cube(int x, int y, int z)
     glVertex3f(-cube_size/2, -cube_size/2, -cube_size/2);
     glVertex3f(-cube_size/2, -cube_size/2, cube_size/2);
   glEnd();
-
+  
   glColor3f(0.0f, 1.0f, 0.0f);
   glBegin(GL_QUADS);  // right
     glNormal3f(1.0, 0.0, 0.0);  // face normal
@@ -159,7 +158,7 @@ void draw_cube(int x, int y, int z)
   glPopMatrix();
 
 } // draw cube function
-
+            
 // draw function
 void draw_func(void)
 {
@@ -194,7 +193,7 @@ void draw_func(void)
 
 // init rendering parameters
 void init_func (void)
-{
+{ 
 
   // init parameters
   cube_size = 30.0; // cuboid size
@@ -206,18 +205,18 @@ void init_func (void)
   // initialize cuboid rotations
 
   // init lighting
-  GLfloat ambient_lighte[4]={0.2,0.2,0.2,1.0};
+  GLfloat ambient_lighte[4]={0.2,0.2,0.2,1.0}; 
   GLfloat diffuse_light[4]={0.7,0.7,0.7,1.0};		// color
   GLfloat specular_light[4]={1.0, 1.0, 1.0, 1.0};	// brightness
   GLfloat light_position[4]={0.0, 50.0, 50.0, 1.0};
 
   // material brightness capacity
-  GLfloat specularity[4]={1.0,1.0,1.0,1.0};
+  GLfloat specularity[4]={1.0,1.0,1.0,1.0}; 
   GLint material_specularity = 60;
 
-  // black background
-  glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
+  // white background
+  glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+  
   // Gouraud colorization model
   glShadeModel(GL_SMOOTH);
 
@@ -230,7 +229,7 @@ void init_func (void)
   glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient_lighte);
 
   // define light parameters
-  glLightfv(GL_LIGHT0, GL_AMBIENT, ambient_lighte);
+  glLightfv(GL_LIGHT0, GL_AMBIENT, ambient_lighte); 
   glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse_light );
   glLightfv(GL_LIGHT0, GL_SPECULAR, specular_light );
   glLightfv(GL_LIGHT0, GL_POSITION, light_position );
@@ -238,7 +237,7 @@ void init_func (void)
   // enable changing material color
   glEnable(GL_COLOR_MATERIAL);
   // enable lighting
-  glEnable(GL_LIGHTING);
+  glEnable(GL_LIGHTING);  
   glEnable(GL_LIGHT0);
   // enable depth buffering
   glEnable(GL_DEPTH_TEST);
