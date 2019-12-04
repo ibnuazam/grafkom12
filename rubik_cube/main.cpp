@@ -1,5 +1,7 @@
 // Rubik Cube in OpenGL
-
+#include <Windows.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <GL/gl.h>
 #include <GL/glut.h>
 #include <vector>
@@ -67,8 +69,18 @@ void apply_rotation(GLfloat angle){
 
 }
 
-// reset face selection parameters
-void reset_selected_face(){
+// chooose face selection parameters
+void face_biru(){
+
+  x_0 = 0;
+  x_k = 0;
+  y_0 = 0;
+  y_k = 0;
+  z_0 = 0;
+  z_k = 0;
+
+}
+void face_red(){
 
   x_0 = 0;
   x_k = 2;
@@ -79,17 +91,7 @@ void reset_selected_face(){
 
 }
 
-// mendapatkan face rubic yang sekarang
-void get_now_face(){
 
-  x_0 = 0;
-  x_k = 2;
-  y_0 = 0;
-  y_k = 2;
-  z_0 = 0;
-  z_k = 2;
-	
-}
 
 void set_camera()
 {
@@ -291,63 +293,74 @@ void reshape_func(GLsizei w, GLsizei h)
   load_visualization_parameters();
 } // reshape function
 
-// keyboard function callback
-void keyboard_func(unsigned char key, int x, int y)
+void key_func(int key, int x, int y)
 {
+switch(key) {
 
-  switch(key) {
+    // view rotation
+    // INcrement or DEcrement
+    case GLUT_KEY_RIGHT: // right
+    //case 'l':
+      rot_y = (rot_y - crement) % 360;
+      break;
 
-    case '+':
+    case GLUT_KEY_LEFT: // left
+    //case 'j':
+      rot_y = (rot_y + crement) % 360;
+      break;
+
+    case GLUT_KEY_UP: // down
+    //case 'i':
+      rot_x = (rot_x + crement) % 360;
+      break;
+
+    case GLUT_KEY_DOWN: // up
+    //case 'k':
+      rot_x = (rot_x - crement) % 360;
+      break;
+    // end of view rotation
+    default:
+      break;
+
+  }
+
+  glutPostRedisplay();
+
+}
+
+
+void case_func(unsigned char key, int x, int y)
+{
+	
+    // cube movements
+    // select cube face
+    // x-axis faces
+switch(key) {
+	case '+':
+	case '=':
       gap += gap_crement;
       break;
 
     case '-':
       gap -= gap_crement;
       break;
-    // view rotation
-    // INcrement or DEcrement
-    case 'L': // right
-    case 'l':
-      rot_y = (rot_y - crement) % 360;
-      break;
-
-    case 'J': // left
-    case 'j':
-      rot_y = (rot_y + crement) % 360;
-      break;
-
-    case 'I': // down
-    case 'i':
-      rot_x = (rot_x + crement) % 360;
-      break;
-
-    case 'K': // up
-    case 'k':
-      rot_x = (rot_x - crement) % 360;
-      break;
-    // end of view rotation
-
-    // cube movements
-
-    // select cube face
-    // x-axis faces
-    case 'Q':
+      
     case 'q':
-      reset_selected_face();
+      face_biru();
       x_0 = 0;
       x_k = 0;
       break;
 
-    case 'W':
+    
     case 'w':
-      reset_selected_face();
+      face_biru();
       x_0 = 1;
       x_k = 1;
       break;
 
-    case 'E':
-    case 'e':
-      reset_selected_face();
+    
+	case 'e':
+      face_biru();
       x_0 = 2;
       x_k = 2;
       break;
@@ -355,21 +368,21 @@ void keyboard_func(unsigned char key, int x, int y)
     // y-axis faces
     case 'A':
     case 'a':
-      reset_selected_face();
+      //reset_selected_face();
       y_0 = 0;
       y_k = 0;
       break;
 
     case 'S':
     case 's':
-      reset_selected_face();
+      //reset_selected_face();
       y_0 = 1;
       y_k = 1;
       break;
 
     case 'D':
     case 'd':
-      reset_selected_face();
+      //reset_selected_face();
       y_0 = 2;
       y_k = 2;
       break;
@@ -377,33 +390,33 @@ void keyboard_func(unsigned char key, int x, int y)
     // z-axis faces
     case 'C':
     case 'c':
-      reset_selected_face();
+      //reset_selected_face();
       z_0 = 0;
       z_k = 0;
       break;
 
     case 'X':
     case 'x':
-      reset_selected_face();
+      //reset_selected_face();
       z_0 = 1;
       z_k = 1;
       break;
 
     case 'Z':
     case 'z':
-      reset_selected_face();
+      //reset_selected_face();
       z_0 = 2;
       z_k = 2;
       break;
 
     // move selected face
-    case 'U': // counter-clockwise
-    case 'u':
+    case '{': // counter-clockwise
+    case '[':
       apply_rotation(-90);
       break;
 
-    case 'O': // clockwise
-    case 'o':
+    case '}': // clockwise
+    case ']':
       apply_rotation(90);
       break;
 
@@ -442,7 +455,8 @@ int main(int argc, char **argv)
   glutDisplayFunc(draw_func);
   glutReshapeFunc(reshape_func);
   glutMouseFunc(mouse_func);
-  glutKeyboardFunc(keyboard_func);
+  glutKeyboardFunc(case_func);
+  glutSpecialFunc(key_func);
   init_func();
   glutMainLoop();
 } // main
