@@ -79,6 +79,18 @@ void reset_selected_face(){
 
 }
 
+// mendapatkan face rubic yang sekarang
+void get_now_face(){
+
+  x_0 = 0;
+  x_k = 2;
+  y_0 = 0;
+  y_k = 2;
+  z_0 = 0;
+  z_k = 2;
+	
+}
+
 void set_camera()
 {
 
